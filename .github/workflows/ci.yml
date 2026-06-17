@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt-get install -y cmake g++ libreadline-dev
+
+    - name: Configure (Release)
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build --parallel
+
+    - name: Run unit tests
+      run: cd build && ctest --output-on-failure
+
+    - name: Smoke test script mode
+      run: |
+        echo 'echo Hello from minibash' > /tmp/test.sh
+        echo 'echo $?' >> /tmp/test.sh
+        ./build/minibash /tmp/test.sh
+
+    - name: Test -c flag
+      run: ./build/minibash -c 'echo works'
+
+  debug-asan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install deps
+      run: sudo apt-get install -y cmake g++ libreadline-dev
+    - name: Build (Debug + ASan)
+      run: |
+        cmake -B build_debug -DCMAKE_BUILD_TYPE=Debug
+        cmake --build build_debug --parallel
+    - name: Run tests under ASan
+      run: cd build_debug && ./run_tests

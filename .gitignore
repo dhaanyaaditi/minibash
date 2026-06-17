@@ -1,0 +1,10 @@
+build/
+build_debug/
+minibash
+run_tests
+*.o
+*.a
+.DS_Store
+__pycache__/
+*.pyc
+~/.minibash_history

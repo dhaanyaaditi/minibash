@@ -1,0 +1,33 @@
+# ~/.minibashrc — loaded on minibash startup
+
+# Useful aliases
+alias ll='ls -la'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias mkdir='mkdir -p'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+
+# Git shortcuts
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+
+# Safety nets
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Environment
+export EDITOR=vim
+export PAGER=less
+export HISTSIZE=1000
+
+# Custom prompt colour (override default)
+# export PS1='\u@\h:\w\$ '
